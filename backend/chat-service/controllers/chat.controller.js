@@ -1,15 +1,16 @@
-const getAIResponse = require("../services/ai.service");
-const Chat = require("../models/Chat");
+import getAIResponse from "../services/ai.service.js";
+import Chat from "../models/Chat.js";
 
 // Send message to AI
-exports.chat = async (req, res) => {
+export const chat = async (req, res) => {
   try {
-    const { message } = req.body;
+    const { message, history } = req.body;
 
     console.log("\n========== CHAT REQUEST ==========");
     console.log("req.user:", req.user);
     console.log("User ID received:", req.user.id);
     console.log("Message:", message);
+    console.log("History:", history);
 
     // Save user message
     const userChat = await Chat.create({
@@ -21,8 +22,8 @@ exports.chat = async (req, res) => {
     console.log("User chat saved:");
     console.log(userChat);
 
-    // Get AI response
-    const aiResponse = await getAIResponse(message);
+    // Get AI response with conversation history
+    const aiResponse = await getAIResponse(message, history);
 
     console.log("AI Response:", aiResponse);
 
@@ -52,9 +53,8 @@ exports.chat = async (req, res) => {
 };
 
 // Get chat history
-exports.getChats = async (req, res) => {
+export const getChats = async (req, res) => {
   try {
-
     console.log("Fetching chats for user:", req.user.id);
 
     const chats = await Chat.find({

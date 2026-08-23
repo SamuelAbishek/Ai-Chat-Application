@@ -1,10 +1,10 @@
-require("dotenv").config();
+import "dotenv/config";
 
-const express = require("express");
-const cors = require("cors");
+import express from "express";
+import cors from "cors";
 
-const connectDB = require("./config/db");
-const chatRoutes = require("./routes/chat.routes");
+import connectDB from "./config/db.js";
+import chatRoutes from "./routes/chat.routes.js";
 
 const app = express();
 

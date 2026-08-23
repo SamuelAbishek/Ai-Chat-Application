@@ -1,134 +1,164 @@
-/* RESET */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+/* ===========================
+   Main Layout
+=========================== */
 
-/* ROOT */
-body {
-  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-  background-color: #000000;
-  color: #e5e7eb;
-}
-
-/* LAYOUT */
 .chat-layout {
-  height: 100vh;
   display: flex;
   flex-direction: column;
-  background-color: #0e0e10;
+  height: 100vh;
+  background: #212121;
+  color: #ffffff;
 }
 
-/* HEADER */
+/* ===========================
+   Header
+=========================== */
+
 .app-header {
-  height: 56px;
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  margin: 10px;
-  border-radius:15px;
-  padding: 0 20px;
-  background-color: #7c7cf4;
-  font-size: 100px;
+  padding: 16px 24px;
+  background: #2f2f2f;
+  border-bottom: 1px solid #404040;
 }
 
 .app-header h1 {
-  font-size: 16px;
-  font-weight: 500;
+  margin: 0;
+  font-size: 22px;
+  font-weight: 600;
+  color: white;
+}
+/* ===========================
+   Header Actions
+=========================== */
+
+.header-actions {
+  display: flex;
   align-items: center;
-  color: #fafafa;
+  gap: 8px;
 }
 
-/* CHAT WINDOW */
+/* ===========================
+   Change Password Button
+=========================== */
+
+.change-password-btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  background: #3a3a3a;
+  color: white;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.change-password-btn:hover {
+  background: #10a37f;
+}
+
+/* ===========================
+   Logout Button
+=========================== */
+
+.logout-btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  background: #3a3a3a;
+  color: white;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.logout-btn:hover {
+  background: #10a37f;
+}
+
+/* ===========================
+   Chat Area
+=========================== */
+
 .chat-window {
   flex: 1;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
-/* MESSAGES */
 .messages {
   flex: 1;
-  padding: 24px;
   overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+  padding: 20px;
 }
 
-/* MESSAGE BUBBLE */
+/* ===========================
+   Message Bubbles
+=========================== */
+
 .message {
-  max-width: 1000px;
-  line-height: 1.4;          /* 🔽 tighter lines */
-  font-size: 14px;           /* 🔽 slightly smaller text */
-  white-space: normal;       /* 🔽 removes extra line breaks */
-  word-break: break-word;
+  max-width: 70%;
+  padding: 12px 16px;
+  margin-bottom: 12px;
+  border-radius: 12px;
+  line-height: 1.6;
+  word-wrap: break-word;
 }
 
-
-/* USER MESSAGE */
 .message.user {
-  align-self: flex-end;
-  background-color: #98bbcd;
-  padding: 12px 16px;
-  border-radius: 10px;
+  margin-left: auto;
+  background: #10a37f;
+  color: white;
 }
 
-/* AI MESSAGE */
 .message.ai {
-  align-self: flex-start;
-  background-color: #8a94a9;
-  padding: 12px 16px;
-  border-radius: 10px;
+  margin-right: auto;
+  background: #3a3a3a;
+  color: white;
 }
 
-/* INPUT AREA */
+/* ===========================
+   Input Area
+=========================== */
+
 .message-input {
   display: flex;
+  gap: 10px;
   padding: 16px;
-  border-top: 1px solid #27272a;
-  background-color: #7c7cf4;
-  margin: 10px;
-  border-radius: 15px;
+  background: #2f2f2f;
+  border-top: 1px solid #404040;
 }
 
 .message-input input {
   flex: 1;
-  padding: 12px 14px;
-  font-size: 15px;
-  border-radius: 8px;
-  border: 1px solid #7c7cf4;
-  background-color: #060606;
-  color: #fafafa;
+  padding: 12px 16px;
+  border: 1px solid #555;
+  border-radius: 10px;
+  background: #202123;
+  color: white;
   outline: none;
+  font-size: 15px;
 }
 
 .message-input input::placeholder {
-  color: #9ca3af;
+  color: #999;
+}
+
+.message-input input:focus {
+  border-color: #10a37f;
 }
 
 .message-input button {
-  margin-left: 12px;
-  padding: 0 18px;
-  font-size: 14px;
-  border-radius: 8px;
+  padding: 12px 20px;
   border: none;
-  background-color: #2563eb;
+  border-radius: 10px;
+  background: #10a37f;
   color: white;
+  font-weight: 600;
   cursor: pointer;
+  transition: 0.25s;
 }
 
 .message-input button:hover {
-  background-color: #91db72;
-}
-
-/* MARKDOWN */
-.message p {
-  margin-bottom: 10px;
-}
-
-.message ul,
-.message ol {
-  margin-left: 20px;
+  background: #0e8e6e;
 }

@@ -1,10 +1,6 @@
-import { useState, KeyboardEvent } from "react";
+import { useState } from "react";
 
-type MessageInputProps = {
-  onSend: (text: string) => void;
-};
-
-const MessageInput = ({ onSend }: MessageInputProps) => {
+const MessageInput = ({ onSend }) => {
   const [input, setInput] = useState("");
 
   const handleSend = () => {
@@ -13,7 +9,7 @@ const MessageInput = ({ onSend }: MessageInputProps) => {
     setInput("");
   };
 
-  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       handleSend();
     }

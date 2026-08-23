@@ -1,8 +1,9 @@
-const express = require("express");
-const router = express.Router();
+import express from "express";
 
-const chatController = require("../controllers/chat.controller");
-const authMiddleware = require("../middleware/auth.middleware");
+import * as chatController from "../controllers/chat.controller.js";
+import authMiddleware from "../middleware/auth.middleware.js";
+
+const router = express.Router();
 
 // Send message to AI
 router.post("/", authMiddleware, chatController.chat);
@@ -10,4 +11,4 @@ router.post("/", authMiddleware, chatController.chat);
 // Get chat history
 router.get("/", authMiddleware, chatController.getChats);
 
-module.exports = router;
+export default router;

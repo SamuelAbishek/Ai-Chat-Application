@@ -1,17 +1,23 @@
-const axios = require("axios");
+import axios from "axios";
 
-const getAIResponse = async (message) => {
+const getAIResponse = async (message, history = []) => {
   try {
+    // If history is available, use it. Otherwise, send only the current message.
+    const messages =
+      history && history.length > 0
+        ? history
+        : [
+            {
+              role: "user",
+              content: message,
+            },
+          ];
+
     const response = await axios.post(
       "https://api.groq.com/openai/v1/chat/completions",
       {
-        model: "llama-3.1-8b-instant",
-        messages: [
-          {
-            role: "user",
-            content: message,
-          },
-        ],
+        model: "openai/gpt-oss-20b",
+        messages,
         temperature: 0.7,
       },
       {
@@ -29,4 +35,4 @@ const getAIResponse = async (message) => {
   }
 };
 
-module.exports = getAIResponse;
+export default getAIResponse;

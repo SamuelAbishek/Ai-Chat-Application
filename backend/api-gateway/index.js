@@ -1,8 +1,8 @@
-require("dotenv").config();
+import "dotenv/config";
 
-const express = require("express");
-const cors = require("cors");
-const axios = require("axios");
+import express from "express";
+import cors from "cors";
+import axios from "axios";
 
 const app = express();
 
@@ -65,6 +65,29 @@ app.get("/api/auth/me", async (req, res) => {
     }
 });
 
+//update-password
+app.post("/api/auth/update-password", async (req, res) => {
+  try {
+    const response = await axios.post(
+      `${process.env.AUTH_SERVICE_URL}/api/auth/update-password`,
+      req.body,
+      {
+        headers: {
+          Authorization: req.headers.authorization,
+        },
+      }
+    );
+
+    res.status(response.status).json(response.data);
+
+  } catch (error) {
+    res.status(error.response?.status || 500).json(
+      error.response?.data || {
+        message: "Internal Server Error",
+      }
+    );
+  }
+});
 // =======================
 // CHAT ROUTES
 // =======================

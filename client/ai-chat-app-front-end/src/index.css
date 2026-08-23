@@ -1,13 +1,174 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+    "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+/* ===========================
+   Authentication Pages
+=========================== */
+
+.auth-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background: #212121;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 430px;
+  background: #2f2f2f;
+  border: 1px solid #404040;
+  border-radius: 18px;
+  padding: 40px;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.35);
+  color: #ffffff;
+}
+
+.auth-card h1 {
+  margin: 0;
+  font-size: 2rem;
+  text-align: center;
+}
+
+.auth-card h2 {
+  margin-top: 12px;
+  margin-bottom: 8px;
+  text-align: center;
+  font-size: 1.4rem;
+}
+
+.auth-subtitle {
+  text-align: center;
+  color: #b8b8b8;
+  margin-bottom: 30px;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.auth-form input {
+  width: 100%;
+  padding: 14px 16px;
+  font-size: 15px;
+  border-radius: 12px;
+  border: 1px solid #555;
+  background: #202123;
+  color: #ffffff;
+  outline: none;
+  transition: all 0.25s ease;
+}
+
+.auth-form input::placeholder {
+  color: #999;
+}
+
+.auth-form input:focus {
+  border-color: #10a37f;
+  box-shadow: 0 0 0 3px rgba(16, 163, 127, 0.25);
+}
+
+.auth-form button {
+  width: 100%;
+  margin-top: 8px;
+  padding: 14px;
+  border: none;
+  border-radius: 12px;
+  background: #10a37f;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.25s ease;
+}
+
+.auth-form button:hover {
+  background: #0e8e6e;
+}
+
+/* ===========================
+   Authentication Footer
+=========================== */
+
+.auth-footer {
+  margin-top: 24px;
+  text-align: center;
+  color: #b8b8b8;
+}
+
+.auth-footer a {
+  color: #10a37f;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.auth-footer a:hover {
+  text-decoration: underline;
+}
+
+/* ===========================
+   Authentication Error
+=========================== */
+
+.auth-error {
+  background: rgba(255, 82, 82, 0.15);
+  border: 1px solid rgba(255, 82, 82, 0.4);
+  color: #ff9b9b;
+  padding: 12px;
+  border-radius: 10px;
+  margin-bottom: 18px;
+  text-align: center;
+}
+
+/* ===========================
+   Authentication Success
+=========================== */
+
+.auth-success {
+  background: rgba(16, 163, 127, 0.15);
+  border: 1px solid rgba(16, 163, 127, 0.4);
+  color: #7fffd4;
+  padding: 12px;
+  border-radius: 10px;
+  margin-bottom: 18px;
+  text-align: center;
+}
+
+/* ===========================
+   Back to Chat Button
+=========================== */
+
+.back-btn {
+  width: 100%;
+  margin-top: 12px;
+  padding: 14px;
+  border: 1px solid #555;
+  border-radius: 12px;
+  background: #202123;
+  color: #ffffff;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.25s ease;
+}
+
+.back-btn:hover {
+  background: #404040;
 }
