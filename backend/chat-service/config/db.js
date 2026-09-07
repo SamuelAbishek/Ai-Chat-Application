@@ -21,7 +21,7 @@ const connectDB = async () => {
 
 // 0 → program finished successfully
 // Non-zero (commonly 1) → something went wrong
-//   }
+  }
 };
 
 export default connectDB;

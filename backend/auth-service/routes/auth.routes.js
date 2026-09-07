@@ -27,4 +27,8 @@ router.get("/me", authMiddleware, authController.getProfile);
 // If a GET request matches /me, first execute authMiddleware.  
 // If the middleware successfully completes its authentication work and calls next(), then execute authController.getProfile.
 
+
+
+router.post("/forgot-password", authController.forgotPassword);
+router.post("/reset-password", authController.resetPassword);
 export default router;

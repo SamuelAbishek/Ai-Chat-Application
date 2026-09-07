@@ -146,3 +146,35 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
     console.log(`API Gateway running on port ${PORT}`);
 });
+
+// Forgot Password
+app.post("/api/auth/forgot-password", async (req, res) => {
+  try {
+    const response = await axios.post(
+      `${process.env.AUTH_SERVICE_URL}/api/auth/forgot-password`,
+      req.body
+    );
+
+    res.status(response.status).json(response.data);
+  } catch (error) {
+    res.status(error.response?.status || 500).json(
+      error.response?.data || { message: "Internal Server Error" }
+    );
+  }
+});
+
+// Reset Password
+app.post("/api/auth/reset-password", async (req, res) => {
+  try {
+    const response = await axios.post(
+      `${process.env.AUTH_SERVICE_URL}/api/auth/reset-password`,
+      req.body
+    );
+
+    res.status(response.status).json(response.data);
+  } catch (error) {
+    res.status(error.response?.status || 500).json(
+      error.response?.data || { message: "Internal Server Error" }
+    );
+  }
+});

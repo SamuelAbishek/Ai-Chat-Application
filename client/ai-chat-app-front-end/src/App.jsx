@@ -3,6 +3,9 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Chat from "./pages/Chat";
 import ChangePassword from "./pages/ChangePassword";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
+
 
 function App() {
   const token = localStorage.getItem("token");
@@ -33,6 +36,13 @@ function App() {
             token ? <ChangePassword /> : <Navigate to="/login" />
           }
         />
+
+        <Route path="/forgot-password" 
+          element={<ForgotPassword />} />
+
+
+        <Route path="/reset-password" 
+          element={<ResetPassword />} />
 
       </Routes>
     </BrowserRouter>

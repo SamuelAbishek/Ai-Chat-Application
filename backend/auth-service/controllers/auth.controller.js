@@ -1,6 +1,8 @@
 import User from "../models/User.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import crypto from "crypto";
+import { sendPasswordResetEmail } from "../services/email.service.js";
 
 // Register
 export const register = async (req, res) => {
@@ -140,6 +142,115 @@ export const getProfile = async (req, res) => {
     console.error(error);
 
     res.status(500).json({
+      message: "Server Error",
+    });
+  }
+};
+
+// Forgot password: send a one-time reset link
+export const forgotPassword = async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    if (!email) {
+      return res.status(400).json({
+        message: "Email is required",
+      });
+    }
+
+    const user = await User.findOne({ email: email.toLowerCase().trim() });
+
+    // Same response even when the email does not exist.
+    // This avoids revealing which addresses have accounts.
+    const successMessage =
+      "If an account exists with that email, a reset link has been sent.";
+
+    if (!user) {
+      return res.status(200).json({ message: successMessage });
+    }
+
+    // Send plain token by email; store only its hash in MongoDB.
+    const resetToken = crypto.randomBytes(32).toString("hex");
+
+    user.passwordResetToken = crypto
+      .createHash("sha256")
+      .update(resetToken)
+      .digest("hex");
+
+    user.passwordResetExpires = Date.now() + 15 * 60 * 1000;
+    await user.save({ validateBeforeSave: false });
+
+    const resetUrl = `${process.env.CLIENT_URL}/reset-password?token=${resetToken}`;
+
+    try {
+      await sendPasswordResetEmail(user.email, resetUrl);
+    } catch (emailError) {
+      // Do not leave an unusable token in the database if email fails.
+      user.passwordResetToken = undefined;
+      user.passwordResetExpires = undefined;
+      await user.save({ validateBeforeSave: false });
+
+      console.error("Password-reset email error:", emailError);
+      return res.status(500).json({
+        message: "Unable to send the reset email. Please try again.",
+      });
+    }
+
+    return res.status(200).json({ message: successMessage });
+  } catch (error) {
+    console.error("Forgot-password error:", error);
+    return res.status(500).json({
+      message: "Server Error",
+    });
+  }
+};
+
+// Reset password using the one-time token from the email
+export const resetPassword = async (req, res) => {
+  try {
+    const { token, newPassword } = req.body;
+
+    if (!token || !newPassword) {
+      return res.status(400).json({
+        message: "Reset token and new password are required",
+      });
+    }
+
+    if (newPassword.length < 6) {
+      return res.status(400).json({
+        message: "Password must contain at least 6 characters",
+      });
+    }
+
+    const hashedToken = crypto
+      .createHash("sha256")
+      .update(token)
+      .digest("hex");
+
+    const user = await User.findOne({
+      passwordResetToken: hashedToken,
+      passwordResetExpires: { $gt: Date.now() },
+    }).select("+passwordResetToken +passwordResetExpires");
+
+    if (!user) {
+      return res.status(400).json({
+        message: "This reset link is invalid or has expired.",
+      });
+    }
+
+    user.password = newPassword;
+    user.passwordResetToken = undefined;
+    user.passwordResetExpires = undefined;
+
+    // Existing pre-save hook hashes the new password.
+    await user.save();
+
+    return res.status(200).json({
+      message: "Password reset successfully. You can now log in.",
+    });
+  } catch (error) {
+    console.error("Reset-password error:", error);
+    return res.status(500).json({
       message: "Server Error",
     });
   }
